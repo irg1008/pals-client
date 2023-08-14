@@ -22,8 +22,9 @@ export default defineConfig(({ mode }) => {
 		],
 		root: "app",
 		server: {
-			open: true,
+			open: false,
 			proxy: { "/api": env.API_URL },
+			port: env.PORT,
 		},
 		resolve: {
 			alias: { "@": path.resolve(__dirname, "/app/src") },
