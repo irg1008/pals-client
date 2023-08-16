@@ -1,40 +1,35 @@
 {
-  "name": "web-client",
-  "private": true,
-  "version": "0.0.0",
-  "type": "module",
-  "scripts": {
-    "dev": "vite --open",
-    "build": "tsc && vite build",
-    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
-  },
-  "dependencies": {
-    "@generouted/react-router": "1.15.4",
-    "@nextui-org/react": "2.0.19",
-    "framer-motion": "10.15.2",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "react-router-dom": "6.15.0"
-  },
-  "devDependencies": {
-    "@types/node": "20.5.0",
-    "@types/react": "18.2.20",
-    "@types/react-dom": "18.2.7",
-    "@typescript-eslint/eslint-plugin": "6.3.0",
-    "@typescript-eslint/parser": "6.3.0",
-    "@vitejs/plugin-react-swc": "3.3.2",
-    "autoprefixer": "10.4.15",
-    "eslint": "8.47.0",
-    "eslint-plugin-react-hooks": "4.6.0",
-    "eslint-plugin-react-refresh": "0.4.3",
-    "ky": "^0.33.3",
-    "postcss": "8.4.27",
-    "tailwindcss": "3.3.3",
-    "typescript": "5.1.6",
-    "usehooks-ts": "^2.9.1",
-    "vite": "4.4.9",
-    "vite-plugin-eslint": "1.8.1",
-    "zustand": "^4.4.1"
-  }
+	"name": "web-client",
+	"version": "0.1.0",
+	"private": true,
+	"scripts": {
+		"dev": "next dev",
+		"build": "next build",
+		"start": "next start",
+		"lint": "next lint"
+	},
+	"dependencies": {
+		"ky": "^0.33.3",
+		"next": "13.4.16",
+		"react": "18.2.0",
+		"react-dom": "18.2.0"
+	},
+	"devDependencies": {
+		"@nextui-org/react": "^2.0.22",
+		"@types/node": "20.5.0",
+		"@types/react": "18.2.20",
+		"@types/react-dom": "18.2.7",
+		"@typescript-eslint/eslint-plugin": "^6.4.0",
+		"@typescript-eslint/parser": "^6.4.0",
+		"autoprefixer": "10.4.15",
+		"eslint": "8.47.0",
+		"eslint-config-next": "13.4.16",
+		"eslint-plugin-react-hooks": "^4.6.0",
+		"eslint-plugin-react-refresh": "^0.4.3",
+		"framer-motion": "^10.16.0",
+		"postcss": "8.4.28",
+		"tailwindcss": "3.3.3",
+		"typescript": "5.1.6",
+		"usehooks-ts": "^2.9.1"
+	}
 }
