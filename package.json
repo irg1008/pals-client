@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --open",
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
@@ -28,10 +28,13 @@
     "eslint": "8.47.0",
     "eslint-plugin-react-hooks": "4.6.0",
     "eslint-plugin-react-refresh": "0.4.3",
+    "ky": "^0.33.3",
     "postcss": "8.4.27",
     "tailwindcss": "3.3.3",
     "typescript": "5.1.6",
+    "usehooks-ts": "^2.9.1",
     "vite": "4.4.9",
-    "vite-plugin-eslint": "1.8.1"
+    "vite-plugin-eslint": "1.8.1",
+    "zustand": "^4.4.1"
   }
 }
