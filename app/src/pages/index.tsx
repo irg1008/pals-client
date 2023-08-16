@@ -1,56 +1,28 @@
-import { Button, ButtonGroup } from "@nextui-org/react";
-import { useState } from "react";
+import { useAPI } from '@/hooks/useAPI'
+import { Link } from '@/router'
+import { useAuth } from '@/stores/auth.store'
+import { Button, ButtonGroup } from '@nextui-org/react'
 
 export default function Home() {
-	const [accessToken, setAccesstoken] = useState("");
-
-	const logIn = async () => {
-		const email = "pepe@pepe.com";
-		const password = "papaspapas2@";
-
-		const formData = new FormData();
-		formData.append("email", email);
-		formData.append("password", password);
-
-		const res = await fetch("/api/auth/login", {
-			method: "POST",
-			body: formData,
-		});
-
-		const data = await res.json();
-		console.log(data);
-		setAccesstoken(data.accessToken);
-	};
+	const { logout, isLogged } = useAuth()
+	const { api } = useAPI()
 
 	const getProtected = async () => {
-		const res = await fetch("/api/protected", {
-			method: "GET",
-			headers: {
-				Authorization: `Bearer ${accessToken}`,
-			},
-		});
-
-		const data = await res.text();
-		console.log(data);
-	};
-
-	const refreshToken = async () => {
-		const res = await fetch("/api/auth/refresh", {
-			method: "GET",
-		});
-
-		const data = await res.json();
-		console.log(data);
-		setAccesstoken(data.accessToken);
-	};
+		const res = await api.get('protected').text()
+		console.log(res)
+	}
 
 	return (
 		<div className="grid place-content-center h-screen">
-			<ButtonGroup>
-				<Button onClick={logIn}>Log in</Button>
-				<Button onClick={getProtected}>Protected</Button>
-				<Button onClick={refreshToken}>Refresh</Button>
-			</ButtonGroup>
+			{isLogged ? 'Logged in' : 'Not logged in'}
+			{isLogged ? (
+				<ButtonGroup>
+					<Button onClick={getProtected}>Protected</Button>
+					<Button onClick={logout}>Log Out</Button>
+				</ButtonGroup>
+			) : (
+				<Link to="/login">Log In</Link>
+			)}
 		</div>
-	);
+	)
 }
