@@ -1,16 +1,16 @@
 'use client'
 
-import { login } from '@/services/auth.service'
+import Navbar from '@/components/navbar'
 import { Button } from '@nextui-org/react'
+import Link from 'next/link'
 
 export default function Home() {
-	const handleLogin = () => {
-		login('pepe@pepe.com', 'papaspapas2@')
-	}
-
-	return (
-		<Button color="primary" onClick={handleLogin}>
-			Login
-		</Button>
-	)
+  return (
+    <>
+      <Button as={Link} href="/example">
+        dashboard
+      </Button>
+      <Navbar />
+    </>
+  )
 }
