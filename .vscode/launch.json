@@ -1,0 +1,12 @@
+{
+	"configurations": [
+		{
+			"name": "🚀 Start App",
+			"request": "launch",
+			"runtimeArgs": ["dev"],
+			"runtimeExecutable": "pnpm",
+			"skipFiles": ["<node_internals>/**"],
+			"type": "node"
+		}
+	]
+}
