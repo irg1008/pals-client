@@ -1,12 +1,15 @@
 {
-	"configurations": [
-		{
-			"name": "🚀 Start App",
-			"request": "launch",
-			"runtimeArgs": ["dev"],
-			"runtimeExecutable": "pnpm",
-			"skipFiles": ["<node_internals>/**"],
-			"type": "node"
-		}
-	]
+  "configurations": [
+    {
+      "name": "🌐 Debug Client",
+      "type": "node-terminal",
+      "request": "launch",
+      "command": "pnpm dev",
+      "serverReadyAction": {
+        "pattern": "started server on .+, url: (https?://.+)",
+        "uriFormat": "%s",
+        "action": "openExternally"
+      }
+    }
+  ]
 }
