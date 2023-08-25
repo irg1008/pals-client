@@ -20,7 +20,7 @@ export default function EmailToResetPassword() {
     <>
       <header className="self-end flex flex-col items-center">
         <PiEnvelopeDuotone size={120} className="text-primary-500" />
-        <h2 className="text-3xl text-center [text-wrap:balance]">Type your email</h2>
+        <h2 className="text-3xl text-balance text-center">Type your email</h2>
       </header>
 
       <section>

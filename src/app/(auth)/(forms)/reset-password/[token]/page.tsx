@@ -9,7 +9,7 @@ export default function ResetPassword({ params }: { params: { token: string } })
     <>
       <header className="self-end flex flex-col items-center">
         <PiLockKeyDuotone size={120} className="text-primary-500" />
-        <h2 className="text-3xl text-center [text-wrap:balance]">Change your password</h2>
+        <h2 className="text-3xl text-center text-balance">Change your password</h2>
       </header>
 
       <section>

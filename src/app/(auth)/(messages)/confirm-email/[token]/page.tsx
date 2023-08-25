@@ -1,7 +1,7 @@
 'use client'
 
 import { useAuth } from '@/stores/auth.store'
-import { Link, Spinner } from '@nextui-org/react'
+import { Link } from '@nextui-org/react'
 import { useQuery } from '@tanstack/react-query'
 import NextLink from 'next/link'
 import { toast } from 'react-hot-toast'
@@ -10,16 +10,18 @@ import { PiSmileyXEyesDuotone } from 'react-icons/pi'
 export default function EmailConfirmed({ params }: { params: { token: string } }) {
   const { confirmEmail } = useAuth()
 
-  const { isLoading } = useQuery({
+  const { data: ok } = useQuery({
     queryKey: ['email-confirmed'],
     queryFn: async () => {
       const error = await confirmEmail(params.token)
       if (!error) toast.success('Email confirmed successfully')
+      return !error
     },
-    staleTime: Infinity
+    staleTime: Infinity,
+    suspense: true
   })
 
-  if (isLoading) return <Spinner size="lg" />
+  if (ok) return null
 
   return (
     <>

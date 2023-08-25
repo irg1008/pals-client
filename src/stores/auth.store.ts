@@ -1,7 +1,6 @@
-import { useAuthGuard } from '@/guards/auth.guard'
 import { api, parse, parseEmpty } from '@/lib/api'
 import type { LogInData, ResetPasswordData, SignUpData } from '@/lib/schemas/auth'
-import { useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import { create } from 'zustand'
 
 type AuthStore = {
@@ -22,11 +21,12 @@ export const authStore = create<AuthStore>()((set) => ({
 
 export const useAuth = () => {
   const { resetAccessToken, setAccessToken, accessToken } = authStore()
-  const { isLogged, refecthIsLogged } = useAuthGuard()
 
-  useEffect(() => {
-    refecthIsLogged()
-  }, [accessToken, refecthIsLogged])
+  const { refresh } = useRouter()
+  authStore.subscribe(() => {
+    // Let the server revalidate logged state to handle redirects accordingly
+    refresh()
+  })
 
   const login = async (formData: LogInData) => {
     const { data, error } = await parse<Token>(api.post('auth/login', { json: formData }))
@@ -37,7 +37,6 @@ export const useAuth = () => {
   const logout = async () => {
     await api.get('auth/logout')
     resetAccessToken()
-    refecthIsLogged()
   }
 
   const signUp = async (formData: SignUpData) => {
@@ -98,7 +97,6 @@ export const useAuth = () => {
     logout,
     accessToken,
     signUp,
-    isLogged,
     confirmEmail,
     createConfirmationRequest,
     createPasswordResetRequest,

@@ -1,13 +1,4 @@
-import {
-  Input as Infer,
-  ValiError,
-  email,
-  maxLength,
-  minLength,
-  object,
-  regex,
-  string
-} from 'valibot'
+import { Input as Infer, Pipe, email, maxLength, minLength, object, regex, string } from 'valibot'
 
 const emailSchema = string([email('Email is invalid')])
 const passwordSchema = string([
@@ -20,36 +11,21 @@ const passwordSchema = string([
 ])
 
 const confirmPasswordSchema = string([minLength(1, 'This field is required')])
-const confirmPasswordPredicate = <
-  T extends {
-    password: string
-    confirmPassword: string
-  }
->(
-  input: T
-) => {
-  const { password, confirmPassword } = input
-  if (password !== confirmPassword) {
-    throw new ValiError([
-      {
-        reason: 'string',
-        validation: 'custom',
-        origin: 'value',
-        message: 'Passwords do not match.',
-        input: input.confirmPassword,
-        path: [
-          {
-            schema: 'object',
-            input: input,
-            key: 'confirmPassword',
-            value: input.confirmPassword
+
+const confirmPasswordPredicate =
+  <T extends ResetPasswordData>(): Pipe<T>[number] =>
+  (input) => {
+    const { password, confirmPassword } = input
+    return password === confirmPassword
+      ? {
+          issue: {
+            validation: 'custom',
+            message: 'Passwords do not match.',
+            input: input.confirmPassword
           }
-        ]
-      }
-    ])
+        }
+      : { output: input }
   }
-  return input
-}
 
 // Reset password
 
@@ -58,10 +34,13 @@ export const ResetPasswordSchema = object(
     password: passwordSchema,
     confirmPassword: confirmPasswordSchema
   },
-  [confirmPasswordPredicate]
+  [confirmPasswordPredicate()]
 )
 
-export type ResetPasswordData = Infer<typeof ResetPasswordSchema>
+export type ResetPasswordData = {
+  password: string
+  confirmPassword: string
+}
 
 // Sign up
 
@@ -71,7 +50,7 @@ export const SignUpSchema = object(
     password: passwordSchema,
     confirmPassword: confirmPasswordSchema
   },
-  [confirmPasswordPredicate]
+  [confirmPasswordPredicate()]
 )
 
 export type SignUpData = Infer<typeof SignUpSchema>

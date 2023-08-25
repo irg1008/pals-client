@@ -15,7 +15,7 @@ export default function LogIn() {
     <>
       <div className="self-end flex flex-col items-center">
         <PiUserDuotone size={120} className="text-primary-500"></PiUserDuotone>
-        <h2 className="text-3xl text-center [text-wrap:balance]">
+        <h2 className="text-3xl text-center text-balance">
           Sign into your <strong>Pals</strong> account
         </h2>
       </div>
@@ -25,6 +25,7 @@ export default function LogIn() {
           fullWidth
           aria-label="Log in tabs"
           selectedKey={selected}
+          radius="full"
           variant="light"
           onSelectionChange={(s) => setSelected(s as SelectedTab)}
         >
