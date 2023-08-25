@@ -7,6 +7,7 @@ import { Button, Link } from '@nextui-org/react'
 import NextLink from 'next/link'
 import { PropsWithChildren } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
+import { toast } from 'react-hot-toast'
 
 export const LoginInForm = ({ children }: PropsWithChildren) => {
   const {
@@ -25,8 +26,12 @@ export const LoginInForm = ({ children }: PropsWithChildren) => {
     if (!err) return
 
     if (err.status === 403) {
-      await createConfirmationRequest(data.email)
       setError('email', { message: 'Please confirm your email' })
+      toast.promise(createConfirmationRequest(data.email), {
+        loading: 'Sending new confirmation email',
+        success: 'Confirmation email sent',
+        error: 'Error sending confirmation email'
+      })
       return
     }
 
