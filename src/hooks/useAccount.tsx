@@ -14,7 +14,8 @@ export const useAccount = () => {
 
   const { data, isLoading } = useQuery({
     queryKey: ['user'],
-    queryFn: getUser
+    queryFn: getUser,
+    staleTime: Infinity
   })
 
   return { user: data, isLoading }
