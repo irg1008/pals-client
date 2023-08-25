@@ -7,6 +7,11 @@ export const api = ky.create({
   credentials: 'include'
 })
 
+type Error = {
+  message: string
+  status: number
+}
+
 type ResponseWithError<T> =
   | {
       data: T
@@ -14,33 +19,30 @@ type ResponseWithError<T> =
     }
   | {
       data?: never
-      error: { message: string; status: number }
+      error: Error
     }
 
-async function withError<T>(res: KyResponse): Promise<ResponseWithError<T>> {
+async function error(res: KyResponse): Promise<Error> {
   const err = await res.json<{ message: string }>()
-  return { error: { message: err.message, status: res.status } }
+  return { message: err.message, status: res.status }
 }
 
 export async function customParse<T>(
   cb: Promise<KyResponse>,
-  getData: (res: KyResponse) => Promise<T>
+  parser: (res: KyResponse) => Promise<T>
 ) {
   const res = await cb
-  if (res.ok) {
-    return { data: await getData(res) }
-  }
-  return withError<T>(res)
+  return res.ok ? { data: await parser(res) } : { error: await error(res) }
 }
 
 export async function parse<T>(cb: Promise<KyResponse>) {
   return customParse<T>(cb, (res) => res.json())
 }
 
-export async function parsePlain(cb: Promise<KyResponse>): Promise<ResponseWithError<string>> {
+export const parsePlain = (cb: Promise<KyResponse>): Promise<ResponseWithError<string>> => {
   return customParse(cb, (res) => res.text())
 }
 
-export async function parseEmpty(cb: Promise<KyResponse>): Promise<ResponseWithError<null>> {
+export const parseEmpty = (cb: Promise<KyResponse>): Promise<ResponseWithError<null>> => {
   return customParse(cb, () => Promise.resolve(null))
 }
