@@ -1,11 +1,17 @@
 'use client'
 
 import { Button } from '@nextui-org/react'
-import toast, { Toaster as DefaultToaster, ToastBar, ToasterProps } from 'react-hot-toast'
+import toast, {
+  Toaster as DefaultToaster,
+  ToastBar,
+  ToastPosition,
+  ToasterProps
+} from 'react-hot-toast'
 import { FiX } from 'react-icons/fi'
 
 export const Toaster = (props: ToasterProps) => {
-  const defaultPosition = 'bottom-right'
+  const defaultPosition: ToastPosition = 'bottom-center'
+
   return (
     <DefaultToaster
       position={defaultPosition}
