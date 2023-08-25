@@ -51,14 +51,14 @@ const NavUser = () => {
 
   return (
     <Dropdown>
-      <DropdownTrigger>
-        <Skeleton
-          className="rounded-full h-12 w-12 grid place-content-center"
-          isLoaded={!isLoadingUser}
-        >
+      <Skeleton
+        className="rounded-full h-12 w-12 grid place-content-center"
+        isLoaded={!isLoadingUser}
+      >
+        <DropdownTrigger>
           <Avatar as="button" className="transition-transform" name={user?.email} isBordered />
-        </Skeleton>
-      </DropdownTrigger>
+        </DropdownTrigger>
+      </Skeleton>
       <DropdownMenu aria-label="User actions" disabledKeys={['email']} variant="flat">
         <DropdownItem key="email">{user?.email}</DropdownItem>
         <DropdownItem key="logout" onClick={() => logout()} startContent={<PiDoorOpenDuotone />}>
