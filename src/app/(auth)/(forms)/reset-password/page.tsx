@@ -1,7 +1,7 @@
 'use client'
 
 import { EmailForm } from '@/components/forms/email-form'
-import { useAuth } from '@/stores/auth.store'
+import { useAuth } from '@/hooks/useAuth'
 import { Card, CardBody } from '@nextui-org/react'
 import { useRouter } from 'next/navigation'
 import { PiEnvelopeDuotone } from 'react-icons/pi'

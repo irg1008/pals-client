@@ -1,4 +1,4 @@
-import { isLogged } from '@/guards/auth'
+import { isLogged } from '@/lib/auth/actions'
 import { redirect } from 'next/navigation'
 import { PropsWithChildren } from 'react'
 

@@ -1,7 +1,7 @@
 'use client'
 
 import { useAccount } from '@/hooks/useAccount'
-import { useAuth } from '@/stores/auth.store'
+import { useAuth } from '@/hooks/useAuth'
 import {
   Avatar,
   Button,
@@ -13,6 +13,7 @@ import {
   Skeleton
 } from '@nextui-org/react'
 import NextLink from 'next/link'
+import { useRouter } from 'next/navigation'
 import { PiDoorOpenDuotone, PiRainbowDuotone } from 'react-icons/pi'
 import { Navbar as UINavbar } from './ui/navbar'
 
@@ -47,7 +48,13 @@ const LogInLink = () => (
 
 const NavUser = () => {
   const { user, isLoading: isLoadingUser } = useAccount()
+  const { push } = useRouter()
   const { logout } = useAuth()
+
+  const doLogout = async () => {
+    await logout()
+    push('/')
+  }
 
   return (
     <Dropdown>
@@ -61,7 +68,7 @@ const NavUser = () => {
       </Skeleton>
       <DropdownMenu aria-label="User actions" disabledKeys={['email']} variant="flat">
         <DropdownItem key="email">{user?.email}</DropdownItem>
-        <DropdownItem key="logout" onClick={() => logout()} startContent={<PiDoorOpenDuotone />}>
+        <DropdownItem key="logout" onClick={doLogout} startContent={<PiDoorOpenDuotone />}>
           Logout
         </DropdownItem>
       </DropdownMenu>

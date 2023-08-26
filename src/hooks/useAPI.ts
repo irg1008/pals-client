@@ -1,5 +1,5 @@
+import { useAuth } from '@/hooks/useAuth'
 import { api } from '@/lib/api'
-import { useAuth } from '@/stores/auth.store'
 
 const setAuthHeader = (request: Request, token: string) => {
   request.headers.set('Authorization', `bearer ${token}`)

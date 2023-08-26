@@ -6,7 +6,7 @@ import { PiFlyingSaucerDuotone } from 'react-icons/pi'
 
 export default function NotFound() {
   return (
-    <div className="grid place-content-center justify-items-center h-screen gap-4 text-center">
+    <div className="grid place-content-center justify-items-center min-h-screen gap-4 text-center">
       <PiFlyingSaucerDuotone size={80} />
       <div>
         <h2 className="uppercase text-3xl font-bold mb-2">Not Found</h2>

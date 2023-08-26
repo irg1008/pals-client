@@ -1,5 +1,5 @@
 import { Navbar } from '@/components/navbar'
-import { isLogged } from '@/guards/auth'
+import { isLogged } from '@/lib/auth/actions'
 import { ReactNode } from 'react'
 
 type ParallelRoutes = {

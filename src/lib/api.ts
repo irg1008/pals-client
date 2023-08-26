@@ -4,7 +4,8 @@ export const api = ky.create({
   prefixUrl: `${process.env.NEXT_PUBLIC_API_URL}/api`,
   timeout: 30 * 1000,
   throwHttpErrors: false,
-  credentials: 'include'
+  credentials: 'include',
+  cache: 'no-store'
 })
 
 type Error = {
@@ -12,7 +13,7 @@ type Error = {
   status: number
 }
 
-type ResponseWithError<T> =
+export type ResponseWithError<T> =
   | {
       data: T
       error?: never
@@ -30,7 +31,7 @@ async function error(res: KyResponse): Promise<Error> {
 export async function customParse<T>(
   cb: Promise<KyResponse>,
   parser: (res: KyResponse) => Promise<T>
-) {
+): Promise<ResponseWithError<T>> {
   const res = await cb
   return res.ok ? { data: await parser(res) } : { error: await error(res) }
 }

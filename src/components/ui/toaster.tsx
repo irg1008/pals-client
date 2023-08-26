@@ -19,16 +19,15 @@ export const Toaster = (props: ToasterProps) => {
       gutter={15}
       toastOptions={{
         className:
-          '!bg-background !text-foreground group/toast !p-2 !shadow-lg light:!shadow-foreground-200 border border-1 border-foreground-200',
+          '!bg-background !text-foreground group/toast !p-2 !shadow-lg light:!shadow-foreground-200 border border-1 border-foreground-200 max-w-md',
         duration: 5000
       }}
-      containerClassName="mx-4"
     >
       {(t) => (
         <ToastBar toast={t} position={props.position || defaultPosition}>
           {({ icon, message }) => (
             <>
-              <div className="my-3 mx-4 flex gap-2">
+              <div className="my-1 mx-2 flex gap-2 text-sm">
                 {icon}
                 <span className="leading-normal">{message}</span>
               </div>
@@ -42,7 +41,7 @@ export const Toaster = (props: ToasterProps) => {
                     aria-label="Close toast"
                     onClick={() => toast.dismiss(t.id)}
                   >
-                    <FiX size={15} />
+                    <FiX size={12} />
                   </Button>
                 </span>
               )}
