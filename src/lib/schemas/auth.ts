@@ -16,15 +16,15 @@ const confirmPasswordPredicate =
   <T extends ResetPasswordData>(): Pipe<T>[number] =>
   (input) => {
     const { password, confirmPassword } = input
-    return password === confirmPassword
-      ? {
-          issue: {
-            validation: 'custom',
-            message: 'Passwords do not match.',
-            input: input.confirmPassword
-          }
-        }
-      : { output: input }
+    if (password === confirmPassword) return { output: input }
+
+    return {
+      issue: {
+        validation: 'custom',
+        message: 'Passwords do not match.',
+        input: input.confirmPassword
+      }
+    }
   }
 
 // Reset password

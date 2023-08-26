@@ -22,7 +22,7 @@ export const authStore = create<AuthStore>()((set) => ({
 export const useAuth = () => {
   const { resetAccessToken, setAccessToken, accessToken } = authStore()
 
-  const { refresh } = useRouter()
+  const { refresh, push } = useRouter()
   authStore.subscribe(() => {
     // Let the server revalidate logged state to handle redirects accordingly
     refresh()
@@ -37,6 +37,7 @@ export const useAuth = () => {
   const logout = async () => {
     await api.get('auth/logout')
     resetAccessToken()
+    push('/')
   }
 
   const signUp = async (formData: SignUpData) => {
@@ -76,6 +77,7 @@ export const useAuth = () => {
       hooks: {
         beforeError: [
           (err) => {
+            console.log(err)
             if (err.response.status === 401) logout()
             return err
           }

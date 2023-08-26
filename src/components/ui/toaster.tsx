@@ -19,7 +19,7 @@ export const Toaster = (props: ToasterProps) => {
       gutter={15}
       toastOptions={{
         className:
-          '!bg-background !text-foreground group/toast !p-2 !shadow-lg !shadow-foreground-200 border border-1 border-foreground-200',
+          '!bg-background !text-foreground group/toast !p-2 !shadow-lg light:!shadow-foreground-200 border border-1 border-foreground-200',
         duration: 5000
       }}
       containerClassName="mx-4"
