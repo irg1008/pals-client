@@ -73,20 +73,13 @@ export const useAuth = () => {
   }
 
   const refreshToken = async () => {
-    const req = api.get('auth/refresh', {
-      hooks: {
-        beforeError: [
-          (err) => {
-            console.log(err)
-            if (err.response.status === 401) logout()
-            return err
-          }
-        ]
-      }
-    })
+    const req = api.get('auth/refresh')
 
     const { data, error } = await parse<Token>(req)
-    if (error) return null
+    if (error) {
+      logout()
+      return null
+    }
 
     const { accessToken } = data
     setAccessToken(accessToken)

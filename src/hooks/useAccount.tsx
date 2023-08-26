@@ -9,7 +9,7 @@ export const useAccount = () => {
   const getUser = async () => {
     const res = api.get('auth/me')
     const { data } = await parse<UserDTO>(res)
-    return data
+    return data ?? null
   }
 
   const { data, isLoading } = useQuery({
