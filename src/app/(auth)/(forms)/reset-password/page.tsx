@@ -13,7 +13,7 @@ export default function EmailToResetPassword() {
   const onSubmit = async (email: string) => {
     const error = await createPasswordResetRequest(email)
     if (error) return 'Email not found'
-    return push('/sent/reset-password')
+    return push('/reset-password/email')
   }
 
   return (

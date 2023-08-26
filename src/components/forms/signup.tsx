@@ -24,11 +24,19 @@ export const SignUpForm = ({ children }: PropsWithChildren) => {
 
   const onSubmit: SubmitHandler<SignUpData> = async (data) => {
     const err = await signUp(data)
-    if (!err) return push('/sent/confirm-email')
+    if (!err) return push('/confirm-email')
 
-    if (err.status === 409) setError('email', { message: 'This email is already in use' })
-    else if (err.status === 400) setError('password', { message: 'Passwords do not match' })
-    else setError('email', { message: 'Something went wrong' })
+    switch (err.status) {
+      case 409:
+        setError('email', { message: 'This email is already in use' })
+        break
+      case 400:
+        setError('password', { message: 'Passwords do not match' })
+        break
+      default:
+        setError('email', { message: 'Something went wrong' })
+        break
+    }
   }
 
   return (

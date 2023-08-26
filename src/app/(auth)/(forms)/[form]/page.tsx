@@ -3,13 +3,23 @@
 import { LoginInForm } from '@/components/forms/login'
 import { SignUpForm } from '@/components/forms/signup'
 import { Card, CardBody, Link, Tab, Tabs } from '@nextui-org/react'
-import { useState } from 'react'
+import { notFound } from 'next/navigation'
+import { Key, useState } from 'react'
 import { PiUserDuotone } from 'react-icons/pi'
 
-type SelectedTab = 'login' | 'sign-up'
+type Props = {
+  params: { form: Selection }
+}
 
-export default function LogIn() {
-  const [selected, setSelected] = useState<SelectedTab>('login')
+enum Selection {
+  signup = 'signup',
+  login = 'login'
+}
+
+export default function Layout({ params: { form } }: Props) {
+  const enumValues = Object.values(Selection)
+  if (!enumValues.includes(form)) notFound()
+  const [selected, setSelected] = useState<Key>(form)
 
   return (
     <>
@@ -27,29 +37,31 @@ export default function LogIn() {
           selectedKey={selected}
           radius="full"
           variant="light"
-          onSelectionChange={(s) => setSelected(s as SelectedTab)}
+          onSelectionChange={(s) => setSelected(s)}
         >
-          <Tab key="login" title="Login">
+          <Tab key={Selection.login} title="Login">
             <Card>
               <CardBody className="overflow-hidden">
                 <LoginInForm>
                   <Footer
                     label="Don't have an account?"
                     buttonLabel="Sign up"
-                    onPress={() => setSelected('sign-up')}
+                    selection={Selection.signup}
+                    onPress={setSelected}
                   />
                 </LoginInForm>
               </CardBody>
             </Card>
           </Tab>
-          <Tab key="sign-up" title="Sign up">
+          <Tab key={Selection.signup} title="Sign up">
             <Card>
               <CardBody className="overflow-hidden">
                 <SignUpForm>
                   <Footer
                     label="Already have an account?"
                     buttonLabel="Login"
-                    onPress={() => setSelected('login')}
+                    selection={Selection.login}
+                    onPress={setSelected}
                   />
                 </SignUpForm>
               </CardBody>
@@ -64,15 +76,17 @@ export default function LogIn() {
 const Footer = ({
   label,
   buttonLabel,
-  onPress
+  onPress,
+  selection
 }: {
   label: string
   buttonLabel: string
-  onPress: () => void
+  onPress: (s: Selection) => void
+  selection: Selection
 }) => (
   <p className="text-center text-small">
     {label}
-    <Link className="ml-2" isBlock size="sm" onPress={onPress}>
+    <Link className="ml-2" isBlock size="sm" onPress={() => onPress(selection)}>
       {buttonLabel}
     </Link>
   </p>
