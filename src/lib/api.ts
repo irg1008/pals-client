@@ -25,10 +25,9 @@ const populateAuthRequest = (req: Request) => {
 export const http = ky.extend({
   prefixUrl: `${config.apiUrl}`,
   throwHttpErrors: false,
-  credentials: 'include',
   hooks: {
-    beforeRequest: [(request) => populateAuthRequest(request)],
-    afterResponse: [async (_, __, response) => populateResponseCookies(response)]
+    beforeRequest: [populateAuthRequest],
+    afterResponse: [(_, __, response) => populateResponseCookies(response)]
   }
 })
 

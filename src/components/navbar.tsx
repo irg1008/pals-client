@@ -17,10 +17,10 @@ import { PiDoorOpenDuotone, PiRainbowDuotone, PiStarDuotone } from 'react-icons/
 import { Navbar as UINavbar } from './ui/navbar'
 
 export type NavbarProps = {
-  user: User | null
+  user: User
 }
 
-export const Navbar = ({ user }: NavbarProps) => {
+export const Navbar = ({ user }: Partial<NavbarProps>) => {
   return (
     <UINavbar
       brand={
@@ -35,11 +35,7 @@ export const Navbar = ({ user }: NavbarProps) => {
   )
 }
 
-type NavUserProps = {
-  user: NonNullable<NavbarProps['user']>
-}
-
-const NavUser = ({ user }: NavUserProps) => {
+const NavUser = ({ user }: NavbarProps) => {
   const { push } = useRouter()
 
   const handleLogOut = async () => {
@@ -48,17 +44,18 @@ const NavUser = ({ user }: NavUserProps) => {
   }
 
   return (
-    <Dropdown>
+    <Dropdown backdrop="blur">
       <DropdownTrigger className="flex gap-2 align-items-center">
         <div>
           <Badge
             isOneChar
             placement="bottom-right"
-            isInvisible={!user.attrs.roles.includes('admin')}
+            isInvisible={!user.attrs.admin}
             content={<PiStarDuotone size={10} />}
             color="warning"
           >
             <Avatar
+              src={user.picture}
               getInitials={(n) => n.slice(0, 2).toUpperCase()}
               as="button"
               className="transition-transform"
@@ -68,8 +65,8 @@ const NavUser = ({ user }: NavUserProps) => {
           </Badge>
         </div>
       </DropdownTrigger>
-      <DropdownMenu aria-label="User actions" disabledKeys={['email']} variant="flat">
-        <DropdownItem key="email">{user.name}</DropdownItem>
+      <DropdownMenu aria-label="User actions" disabledKeys={['name']} variant="flat">
+        <DropdownItem key="name">{user.name}</DropdownItem>
         <DropdownItem key="logout" onClick={handleLogOut} startContent={<PiDoorOpenDuotone />}>
           Logout
         </DropdownItem>

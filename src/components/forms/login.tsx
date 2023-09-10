@@ -5,11 +5,12 @@ import { PasswordInput } from '@/components/ui/password-input'
 import { logIn, sendConfirmEmail } from '@/lib/auth/actions'
 import { LogInData, LogInSchema } from '@/lib/schemas/auth'
 import { resolver } from '@/lib/schemas/resolver'
-import { Button, Link } from '@nextui-org/react'
+import { Button, Divider, Link } from '@nextui-org/react'
 import NextLink from 'next/link'
 import { PropsWithChildren } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
+import { ExternalAuth } from './external-auth'
 
 export const LoginInForm = ({ children }: PropsWithChildren) => {
   const {
@@ -42,6 +43,10 @@ export const LoginInForm = ({ children }: PropsWithChildren) => {
 
   return (
     <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)} noValidate>
+      <ExternalAuth google={{ label: 'Log in with Google' }} apple={{ hidden: true }} />
+
+      <Divider className="my-2" />
+
       <Input
         variant="bordered"
         isRequired

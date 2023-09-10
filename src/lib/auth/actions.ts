@@ -3,6 +3,8 @@
 import { api, http, parse, parseEmpty } from '@/lib/api'
 import { LogInData, ResetPasswordData, SignUpData } from '@/lib/schemas/auth'
 import { cookies } from 'next/headers'
+import { redirect } from 'next/navigation'
+import { config } from '../config/env'
 
 type LoggedResponse = {
   status: 'not logged in' | 'logged in'
@@ -12,12 +14,16 @@ type LoggedResponse = {
 type Role = 'admin' | 'user'
 
 export type User = {
-  name: string
   id: string
+  name: string
+  picture?: string
   attrs: {
-    roles: Role[]
+    admin: boolean
+    role: Role
   }
 }
+
+export type ExeternalAuthProviders = 'google' | 'apple'
 
 export const isLogged = async () => {
   const res = http.get('auth/status')
@@ -42,8 +48,8 @@ export const signUp = (params: SignUpData) => {
 
 export const getUser = async () => {
   const res = http.get('auth/user')
-  const { data, error } = await parse<User>(res)
-  return error ? null : data
+  const { data } = await parse<User>(res)
+  return data
 }
 
 export const confirmEmail = (token: string) => {
@@ -74,6 +80,17 @@ export const logOut = async () => {
   }
 }
 
+export const parseExternalURL = (provider: ExeternalAuthProviders) => {
+  const url = new URL(`${config.apiUrl}/auth/${provider}/login`)
+  url.searchParams.append('from', config.appUrl)
+  return url.toString()
+}
+
+export const externalLogIn = async (provider: ExeternalAuthProviders) => {
+  redirect(parseExternalURL(provider))
+}
+
+// TODO: Move to other place
 export const protectedRoute = () => {
   const res = api.get('protected')
   return parse<{ message: string }>(res)

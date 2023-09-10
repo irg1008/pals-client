@@ -4,10 +4,11 @@ import { signUp } from '@/lib/auth/actions'
 import type { SignUpData } from '@/lib/schemas/auth'
 import { SignUpSchema } from '@/lib/schemas/auth'
 import { resolver } from '@/lib/schemas/resolver'
-import { Button } from '@nextui-org/react'
+import { Button, Divider } from '@nextui-org/react'
 import { useRouter } from 'next/navigation'
 import { PropsWithChildren } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
+import { ExternalAuth } from './external-auth'
 
 export const SignUpForm = ({ children }: PropsWithChildren) => {
   const {
@@ -40,6 +41,10 @@ export const SignUpForm = ({ children }: PropsWithChildren) => {
 
   return (
     <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)} noValidate>
+      <ExternalAuth google={{ label: 'Sign up with Google' }} apple={{ hidden: true }} />
+
+      <Divider className="my-2" />
+
       <Input
         variant="bordered"
         isRequired
