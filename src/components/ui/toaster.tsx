@@ -29,7 +29,7 @@ export const Toaster = (props: ToasterProps) => {
             <>
               <div className="my-1 mx-2 flex gap-2 text-sm">
                 {icon}
-                <span className="leading-normal">{message}</span>
+                <span className="leading-normal [text-wrap:balance]">{message}</span>
               </div>
               {t.type !== 'loading' && (
                 <span className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 group-hover/toast:opacity-100 opacity-0 transition-opacity duration-250 max-lg:opacity-100">

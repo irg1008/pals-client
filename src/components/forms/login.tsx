@@ -2,13 +2,14 @@
 
 import { Input } from '@/components/ui/input'
 import { PasswordInput } from '@/components/ui/password-input'
-import { logIn } from '@/lib/auth/actions'
+import { logIn, sendConfirmEmail } from '@/lib/auth/actions'
 import { LogInData, LogInSchema } from '@/lib/schemas/auth'
 import { resolver } from '@/lib/schemas/resolver'
 import { Button, Link } from '@nextui-org/react'
 import NextLink from 'next/link'
 import { PropsWithChildren } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
+import toast from 'react-hot-toast'
 
 export const LoginInForm = ({ children }: PropsWithChildren) => {
   const {
@@ -24,8 +25,18 @@ export const LoginInForm = ({ children }: PropsWithChildren) => {
     const { error } = await logIn(formData)
     if (!error) return
 
-    if (error.status === 403) {
-      setError('email', { message: 'User or password is incorrect' })
+    switch (error.status) {
+      case 403:
+        setError('email', { message: 'User or password is incorrect' })
+        break
+      case 500:
+        sendConfirmEmail(formData.email)
+        toast.promise(sendConfirmEmail(formData.email), {
+          loading: 'You are not verified. Sending new confirmation email...',
+          success: 'Email sent. Check your inbox',
+          error: 'Something went wrong'
+        })
+        break
     }
   }
 

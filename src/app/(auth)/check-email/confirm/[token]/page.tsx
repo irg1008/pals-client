@@ -18,21 +18,23 @@ export default function EmailConfirmed({ params }: { params: { token: string } }
     revalidateOnMount: true
   })
 
-  if (!data?.error) {
+  if (data && !data.error) {
     toast.success('Please log in to continue')
     push('/login')
   }
 
   return (
-    <div className="flex flex-col items-center gap-4 animate-appearance-in">
-      <PiSmileyXEyesDuotone size={80} />
-      <div>
-        <h2 className="uppercase text-3xl font-bold mb-2">Invalid request</h2>
-        <p className="text-foreground-500">The request is invalid or has expired.</p>
-        <Link color="primary" isBlock as={NextLink} href="/login" className="mt-4">
-          Go to Sign In
-        </Link>
+    data?.error && (
+      <div className="flex flex-col items-center gap-4 animate-appearance-in">
+        <PiSmileyXEyesDuotone size={80} />
+        <div>
+          <h2 className="uppercase text-3xl font-bold mb-2">Invalid request</h2>
+          <p className="text-foreground-500">The request is invalid or has expired.</p>
+          <Link color="primary" isBlock as={NextLink} href="/login" className="mt-4">
+            Go to Sign In
+          </Link>
+        </div>
       </div>
-    </div>
+    )
   )
 }
