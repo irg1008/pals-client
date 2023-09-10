@@ -1,6 +1,6 @@
 import { Input } from '@/components/ui/input'
 import { PasswordInput } from '@/components/ui/password-input'
-import { useAuth } from '@/hooks/useAuth'
+import { signUp } from '@/lib/auth/actions'
 import type { SignUpData } from '@/lib/schemas/auth'
 import { SignUpSchema } from '@/lib/schemas/auth'
 import { resolver } from '@/lib/schemas/resolver'
@@ -19,14 +19,13 @@ export const SignUpForm = ({ children }: PropsWithChildren) => {
     resolver: resolver(SignUpSchema)
   })
 
-  const { signUp } = useAuth()
   const { push } = useRouter()
 
   const onSubmit: SubmitHandler<SignUpData> = async (data) => {
-    const err = await signUp(data)
-    if (!err) return push('/confirm-email')
+    const { error } = await signUp(data)
+    if (!error) return push('/check-email/confirm')
 
-    switch (err.status) {
+    switch (error.status) {
       case 409:
         setError('email', { message: 'This email is already in use' })
         break
@@ -57,14 +56,6 @@ export const SignUpForm = ({ children }: PropsWithChildren) => {
         placeholder="Enter your password"
         error={errors.password?.message}
         {...register('password')}
-      />
-      <PasswordInput
-        variant="bordered"
-        isRequired
-        label="Confirm Password"
-        placeholder="Enter your password again"
-        error={errors.confirmPassword?.message}
-        {...register('confirmPassword')}
       />
       <footer className="flex gap-3 flex-col mt-3">
         <Button fullWidth color="primary" type="submit" isLoading={isSubmitting}>

@@ -1,12 +1,11 @@
 'use client'
 
-import { AuthHandler } from '@/lib/auth/handler'
 import { NextUIProvider } from '@nextui-org/react'
 
+// if (typeof window !== 'undefined') {
+//   initAuthProvider()
+// }
+
 export function Providers({ children }: { children: React.ReactNode }) {
-  return (
-    <NextUIProvider>
-      <AuthHandler>{children}</AuthHandler>
-    </NextUIProvider>
-  )
+  return <NextUIProvider>{children}</NextUIProvider>
 }

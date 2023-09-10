@@ -1,15 +1,7 @@
-import { Input as Infer, Pipe, email, maxLength, minLength, object, regex, string } from 'valibot'
+import { Input as Infer, Pipe, email, minLength, object, string } from 'valibot'
 
 const emailSchema = string([email('Email is invalid')])
-const passwordSchema = string([
-  minLength(5, 'Password must be at least 5 characters'),
-  maxLength(100, 'Password must be at most 100 characters'),
-  regex(
-    /^(?=.*\d)(?=.*[a-zA-Z])(?=.*[^\w\d\s:])([^\s]).*$/,
-    'Password must contain at least one number, one letter and one special character'
-  )
-])
-
+const passwordSchema = string([minLength(5, 'Password must be at least 5 characters')])
 const confirmPasswordSchema = string([minLength(1, 'This field is required')])
 
 const confirmPasswordPredicate =
@@ -22,7 +14,7 @@ const confirmPasswordPredicate =
       issue: {
         validation: 'custom',
         message: 'Passwords do not match.',
-        input: input.confirmPassword
+        input
       }
     }
   }
@@ -44,14 +36,10 @@ export type ResetPasswordData = {
 
 // Sign up
 
-export const SignUpSchema = object(
-  {
-    email: emailSchema,
-    password: passwordSchema,
-    confirmPassword: confirmPasswordSchema
-  },
-  [confirmPasswordPredicate()]
-)
+export const SignUpSchema = object({
+  email: emailSchema,
+  password: passwordSchema
+})
 
 export type SignUpData = Infer<typeof SignUpSchema>
 

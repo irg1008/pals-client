@@ -1,19 +1,18 @@
 'use client'
 
 import { EmailForm } from '@/components/forms/email-form'
-import { useAuth } from '@/hooks/useAuth'
+import { sendPasswordResetEmail } from '@/lib/auth/actions'
 import { Card, CardBody } from '@nextui-org/react'
 import { useRouter } from 'next/navigation'
 import { PiEnvelopeDuotone } from 'react-icons/pi'
 
 export default function EmailToResetPassword() {
-  const { createPasswordResetRequest } = useAuth()
   const { push } = useRouter()
 
   const onSubmit = async (email: string) => {
-    const error = await createPasswordResetRequest(email)
+    const { error } = await sendPasswordResetEmail(email)
     if (error) return 'Email not found'
-    return push('/reset-password/email')
+    return push('/check-email/reset-password')
   }
 
   return (

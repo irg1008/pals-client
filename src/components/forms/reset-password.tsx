@@ -1,9 +1,12 @@
+'use client'
+
 import { PasswordInput } from '@/components/ui/password-input'
-import { useAuth } from '@/hooks/useAuth'
+import { resetPassword } from '@/lib/auth/actions'
 import type { ResetPasswordData } from '@/lib/schemas/auth'
 import { ResetPasswordSchema } from '@/lib/schemas/auth'
 import { resolver } from '@/lib/schemas/resolver'
 import { Button } from '@nextui-org/react'
+import { useRouter } from 'next/navigation'
 import { PropsWithChildren } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
@@ -18,12 +21,17 @@ export const ResetPasswordForm = ({ children, token }: PropsWithChildren<{ token
     resolver: resolver(ResetPasswordSchema)
   })
 
-  const { resetPassword } = useAuth()
+  const { push } = useRouter()
 
   const onSubmit: SubmitHandler<ResetPasswordData> = async (data) => {
-    const error = await resetPassword(token, data)
-    if (error) setError('password', { message: 'The request is not valid or has expired' })
-    else toast.success('Password changed successfully')
+    const { error } = await resetPassword(token, data)
+    if (error) {
+      setError('password', { message: 'The request is not valid or has expired' })
+      return
+    }
+
+    toast.success('Password changed successfully')
+    push('/login')
   }
 
   return (

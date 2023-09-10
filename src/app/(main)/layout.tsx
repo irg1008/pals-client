@@ -1,5 +1,5 @@
 import { Navbar } from '@/components/navbar'
-import { isLogged } from '@/lib/auth/actions'
+import { getUser } from '@/lib/auth/actions'
 import { ReactNode } from 'react'
 
 type ParallelRoutes = {
@@ -7,13 +7,13 @@ type ParallelRoutes = {
   landing: ReactNode
 }
 
-export default function Layout({ dashboard, landing }: ParallelRoutes) {
-  const logged = isLogged()
+export default async function Layout({ dashboard, landing }: ParallelRoutes) {
+  const user = await getUser()
 
   return (
     <>
-      <Navbar isLogged={logged} />
-      <main className="p-4 max-w-screen-xl mx-auto">{logged ? dashboard : landing}</main>
+      <Navbar user={user} />
+      <main className="p-4 max-w-screen-xl mx-auto">{user ? dashboard : landing}</main>
     </>
   )
 }
