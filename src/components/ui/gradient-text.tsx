@@ -1,4 +1,4 @@
-import { HTMLProps, ReactHTML, createElement } from 'react'
+import { HTMLProps, ReactHTML, createElement, useEffect } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { useCounter, useInterval } from 'usehooks-ts'
 
@@ -12,12 +12,14 @@ type MultipleGradientTextProps<K extends keyof ReactHTML> = {
   items: GradientTextProps[]
   delay?: number
   as?: K
+  onItemChange?: (index: number) => void
 }
 
 export const MultipleGradientText = <K extends keyof ReactHTML>({
   items,
   as,
   delay = 3000,
+  onItemChange,
   ...props
 }: MultipleGradientTextProps<K> & HTMLProps<K>) => {
   const { increment, count, reset } = useCounter(0)
@@ -25,6 +27,10 @@ export const MultipleGradientText = <K extends keyof ReactHTML>({
   useInterval(() => {
     count === items.length - 1 ? reset() : increment()
   }, delay)
+
+  useEffect(() => {
+    onItemChange?.(count)
+  }, [count, onItemChange])
 
   return createElement(
     as ?? 'div',
