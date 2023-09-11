@@ -19,7 +19,7 @@
     "@types/node": "20.5.9",
     "@types/react": "18.2.21",
     "@types/react-dom": "18.2.7",
-    "@types/set-cookie-parser": "^2.4.3",
+    "@types/set-cookie-parser": "2.4.3",
     "@typescript-eslint/eslint-plugin": "6.6.0",
     "@typescript-eslint/parser": "6.6.0",
     "autoprefixer": "10.4.15",
@@ -30,6 +30,7 @@
     "eslint-plugin-prettier": "5.0.0",
     "eslint-plugin-tailwindcss": "3.13.0",
     "framer-motion": "10.16.4",
+    "jwt-decode": "3.1.2",
     "ky": "1.0.1",
     "postcss": "8.4.29",
     "prettier-plugin-tailwindcss": "0.5.4",
@@ -42,7 +43,7 @@
     "tailwindcss": "3.3.3",
     "typescript": "5.2.2",
     "usehooks-ts": "2.9.1",
-    "valibot": "0.14.0",
+    "valibot": "0.15.0",
     "zustand": "4.4.1"
   }
 }
