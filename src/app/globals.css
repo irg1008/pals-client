@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .fade-mask-down {
+    @apply [mask-image:linear-gradient(to_bottom,black_0%,transparent_100%)];
+  }
+}
+
+@layer components {
+  .bg-noise {
+    background-image: url('/imgs/filters/noise.svg');
+    mix-blend-mode: overlay;
+    background-size: 10%;
+    @apply absolute bg-repeat top-0 left-0 w-full h-full;
+  }
+}
