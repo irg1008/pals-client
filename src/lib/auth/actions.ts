@@ -1,10 +1,12 @@
 'use server'
 
-import { api, http, parse, parseEmpty } from '@/lib/api'
+import { http, parse, parseEmpty } from '@/lib/api'
+import { config } from '@/lib/config/env'
 import { LogInData, ResetPasswordData, SignUpData } from '@/lib/schemas/auth'
+import { ResponseCookie } from 'next/dist/compiled/@edge-runtime/cookies'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
-import { config } from '../config/env'
+import setCookie from 'set-cookie-parser'
 
 type LoggedResponse = {
   status: 'not logged in' | 'logged in'
@@ -74,10 +76,7 @@ export const resetPassword = (token: string, formData: ResetPasswordData) => {
 
 export const logOut = async () => {
   const { ok } = await http.get('auth/logout')
-  if (ok) {
-    cookies().delete('JWT')
-    cookies().delete('XSRF-TOKEN')
-  }
+  if (ok) deleteAuthCookies()
 }
 
 export const parseExternalURL = (provider: ExeternalAuthProviders) => {
@@ -90,8 +89,40 @@ export const externalLogIn = async (provider: ExeternalAuthProviders) => {
   redirect(parseExternalURL(provider))
 }
 
-// TODO: Move to other place
-export const protectedRoute = () => {
-  const res = api.get('protected')
-  return parse<{ message: string }>(res)
+//#region Auth headers and cookies
+
+const JWT = 'JWT'
+const XSRF = 'XSRF-TOKEN'
+const XSRF_HEADER = 'X-XSRF-TOKEN'
+
+const getAuthCookies = () => {
+  const cookiesStore = cookies()
+  return {
+    jwt: cookiesStore.get(JWT),
+    xsrf: cookiesStore.get(XSRF)
+  }
 }
+
+const deleteAuthCookies = () => {
+  const cookiesStore = cookies()
+  cookiesStore.delete(JWT)
+  cookiesStore.delete(XSRF)
+}
+
+export const setAuthHeaders = (headers: Headers) => {
+  const { jwt, xsrf } = getAuthCookies()
+  if (jwt) headers.set('cookie', `${jwt.name}=${jwt.value}`)
+  if (xsrf) headers.set(XSRF_HEADER, xsrf.value)
+}
+
+export const transverseAuthCookies = (headers: Headers) => {
+  const cookiesStore = cookies()
+  const cookie = headers.getSetCookie()
+  const parsed = setCookie.parse(cookie)
+
+  parsed.forEach((c) => {
+    cookiesStore.set(c as ResponseCookie)
+  })
+}
+
+//#endregion

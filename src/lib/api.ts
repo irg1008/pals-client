@@ -1,33 +1,16 @@
+import { setAuthHeaders, transverseAuthCookies } from '@/lib/auth/actions'
 import { config } from '@/lib/config/env'
 import ky, { KyResponse } from 'ky'
-import { ResponseCookie } from 'next/dist/compiled/@edge-runtime/cookies'
-import { cookies } from 'next/headers'
-import setCookie from 'set-cookie-parser'
 
-const populateResponseCookies = (res: KyResponse) => {
-  const header = res.headers.getSetCookie()
-  setCookie.parse(header).forEach((c) => {
-    cookies().set(c as ResponseCookie)
-  })
-  return res
-}
-
-const populateAuthRequest = (req: Request) => {
-  const cookiesStore = cookies()
-
-  const jwt = cookiesStore.get('JWT')
-  const xsrf = cookiesStore.get('XSRF-TOKEN')
-
-  if (jwt) req.headers.set('cookie', `${jwt.name}=${jwt.value}`)
-  if (xsrf) req.headers.set('X-XSRF-TOKEN', xsrf.value)
-}
+type Error = { message?: string; error?: string; status: number }
+export type ResponseWithError<T> = { data: T; error?: never } | { data?: never; error: Error }
 
 export const http = ky.extend({
   prefixUrl: `${config.apiUrl}`,
   throwHttpErrors: false,
   hooks: {
-    beforeRequest: [populateAuthRequest],
-    afterResponse: [(_, __, response) => populateResponseCookies(response)]
+    beforeRequest: [({ headers }) => setAuthHeaders(headers)],
+    afterResponse: [(_, __, { headers }) => transverseAuthCookies(headers)]
   }
 })
 
@@ -36,28 +19,27 @@ export const api = http.extend({
   timeout: 30 * 1000
 })
 
-type ErrorResponse = { message?: string; error?: string }
-type Error = ErrorResponse & { status: number }
-
-export type ResponseWithError<T> = { data: T; error?: never } | { data?: never; error: Error }
-
-async function error(res: KyResponse): Promise<Error> {
-  const err = await res.json<Omit<Error, 'status'>>()
-  return { message: err.message, status: res.status, error: err.error }
-}
-
 export async function customParse<T>(
   cb: Promise<KyResponse>,
   parser: (res: KyResponse) => Promise<T>
 ): Promise<ResponseWithError<T>> {
   const res = await cb
-  return res.ok ? { data: await parser(res) } : { error: await error(res) }
+  return res.ok
+    ? {
+        data: await parser(res)
+      }
+    : {
+        error: await error(res)
+      }
+}
+
+async function error(res: KyResponse): Promise<Error> {
+  const err = await res.json<Omit<Error, 'status'>>()
+  return { status: res.status, ...err }
 }
 
 export const parsePlain = (cb: Promise<KyResponse>) => customParse(cb, (res) => res.text())
 
 export const parseEmpty = (cb: Promise<KyResponse>) => customParse(cb, () => Promise.resolve(null))
 
-export async function parse<T>(cb: Promise<KyResponse>) {
-  return customParse<T>(cb, (res) => res.json())
-}
+export const parse = <T>(cb: Promise<KyResponse>) => customParse<T>(cb, (res) => res.json())

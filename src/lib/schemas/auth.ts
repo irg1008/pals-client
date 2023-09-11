@@ -1,4 +1,4 @@
-import { Input as Infer, Pipe, email, minLength, object, string } from 'valibot'
+import { Input as Infer, Pipe, ValiError, email, minLength, object, string } from 'valibot'
 
 const emailSchema = string([email('Email is invalid')])
 const passwordSchema = string([minLength(5, 'Password must be at least 5 characters')])
@@ -10,13 +10,23 @@ const confirmPasswordPredicate =
     const { password, confirmPassword } = input
     if (password === confirmPassword) return { output: input }
 
-    return {
-      issue: {
+    throw new ValiError([
+      {
+        reason: 'string',
         validation: 'custom',
+        origin: 'value',
         message: 'Passwords do not match.',
-        input
+        input: input.confirmPassword,
+        path: [
+          {
+            schema: 'object',
+            input,
+            key: 'confirmPassword',
+            value: input.confirmPassword
+          }
+        ]
       }
-    }
+    ])
   }
 
 // Reset password
