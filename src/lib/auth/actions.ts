@@ -55,23 +55,23 @@ export const getUser = async () => {
 }
 
 export const confirmEmail = (token: string) => {
-  const req = http.post('auth/email/confirm', { json: { token } })
-  return parseEmpty(req)
+  const res = http.post('auth/email/confirm', { json: { token } })
+  return parseEmpty(res)
 }
 
 export const sendConfirmEmail = (email: string) => {
-  const req = http.get('auth/email/request/confirm', { searchParams: { email } })
-  return parseEmpty(req)
+  const res = http.get('auth/email/request/confirm', { searchParams: { email } })
+  return parseEmpty(res)
 }
 
 export const sendPasswordResetEmail = (email: string) => {
-  const req = http.get('auth/email/request/passwd-reset', { searchParams: { email } })
-  return parseEmpty(req)
+  const res = http.get('auth/email/request/passwd-reset', { searchParams: { email } })
+  return parseEmpty(res)
 }
 
 export const resetPassword = (token: string, formData: ResetPasswordData) => {
-  const req = http.post('auth/email/passwd-reset', { json: { token, ...formData } })
-  return parseEmpty(req)
+  const res = http.post('auth/email/passwd-reset', { json: { token, ...formData } })
+  return parseEmpty(res)
 }
 
 export const logOut = async () => {

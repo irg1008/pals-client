@@ -1,0 +1,117 @@
+{
+  "brand": "Pals",
+  "Layout": {
+    "title": "Pals"
+  },
+  "Home": {
+    "logInLink": "Log In",
+    "logOut": "Log Out",
+    "header": {
+      "meet": "Meet.",
+      "explore": "Explore.",
+      "learn": "Learn."
+    }
+  },
+  "ResetPassword": {
+    "cta": "Change your password",
+    "title": "Reset Password",
+    "submit": "Reset Password",
+    "submitting": "Resetting Password...",
+    "request": {
+      "sent": "Password reset link sent",
+      "checkInbox": "Please check your email and follow the instructions to reset your password"
+    },
+    "email": {
+      "cta": "Type your email",
+      "submit": "Send reset link",
+      "submitting": "Sending reset link...",
+      "notFound": "Email not found"
+    },
+    "newPassword": {
+      "label": "New Password",
+      "placeholder": "Enter your new password"
+    },
+    "confirmPassword": {
+      "label": "Confirm Password",
+      "placeholder": "Confirm your new password"
+    },
+    "errors": {
+      "invalidRequest": "The request is not valid or has expired"
+    },
+    "success": "Your password has been reset successfully"
+  },
+  "ConfirmEmail": {
+    "request": {
+      "sent": "Confirmation email sent",
+      "checkInbox": "Please check your email and follow the instructions to confirm your email address"
+    },
+    "confirm": {
+      "succes": "Please log in to continue",
+      "invalid": {
+        "title": "Invalid Request",
+        "description": "The request is not valid or has expired",
+        "logInLink": "Log In"
+      }
+    }
+  },
+  "LogIn": {
+    "title": "Log In",
+    "email": "Email",
+    "password": "Password",
+    "submit": "Log In",
+    "submitting": "Logging In...",
+    "forgotPassword": "Forgot your password?",
+    "noAccount": "Don't have an account?",
+    "signUpLink": "Sign Up",
+    "googleLabel": "Log In with Google",
+    "verification": {
+      "sending": "Sending verification email...",
+      "sent": "Verification email sent. Check your inbox!",
+      "error": "An error occurred while sending verification email"
+    },
+    "errors": {
+      "invalidCredentials": "Invalid email or password",
+      "notVerified": "You are not verified. Sending new confirmation email...",
+      "default": "An error occurred while logging in"
+    }
+  },
+  "SignUp": {
+    "title": "Sign Up",
+    "email": "Email",
+    "password": "Password",
+    "submit": "Sign Up",
+    "submitting": "Signing Up...",
+    "alreadyAccount": "Already have an account?",
+    "logInLink": "Log In",
+    "googleLabel": "Sign Up with Google",
+    "errors": {
+      "emailInUse": "This email already in use",
+      "default": "An error occurred while creating your account"
+    }
+  },
+  "NotFound": {
+    "title": "Not Found",
+    "description": "Could not find requested resource",
+    "homeLink": "Return Home"
+  },
+  "Forbidden": {
+    "title": "Forbidden",
+    "description": "You must be logged in to access this page",
+    "logInLink": "Log In"
+  },
+  "UI": {
+    "input": {
+      "email": {
+        "label": "Email",
+        "placeholder": "Enter your email"
+      },
+      "password": {
+        "label": "Password",
+        "placeholder": "Enter your password"
+      }
+    },
+    "toast": {
+      "dismiss": "Dismiss message"
+    }
+  }
+}

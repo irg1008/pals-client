@@ -1,6 +1,7 @@
 'use client'
 
 import { Button } from '@nextui-org/react'
+import { useTranslations } from 'next-intl'
 import toast, {
   Toaster as DefaultToaster,
   ToastBar,
@@ -10,6 +11,7 @@ import toast, {
 import { FiX } from 'react-icons/fi'
 
 export const Toaster = (props: ToasterProps) => {
+  const t = useTranslations('UI.toast')
   const defaultPosition: ToastPosition = 'bottom-center'
 
   return (
@@ -23,23 +25,23 @@ export const Toaster = (props: ToasterProps) => {
         duration: 5000
       }}
     >
-      {(t) => (
-        <ToastBar toast={t} position={props.position || defaultPosition}>
+      {(tb) => (
+        <ToastBar toast={tb} position={props.position || defaultPosition}>
           {({ icon, message }) => (
             <>
               <div className="my-1 mx-2 flex gap-2 text-sm">
                 {icon}
                 <span className="leading-normal [text-wrap:balance]">{message}</span>
               </div>
-              {t.type !== 'loading' && (
+              {tb.type !== 'loading' && (
                 <span className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 group-hover/toast:opacity-100 opacity-0 transition-opacity duration-250 max-lg:opacity-100">
                   <Button
                     size="sm"
                     variant="flat"
                     radius="full"
                     isIconOnly
-                    aria-label="Close toast"
-                    onClick={() => toast.dismiss(t.id)}
+                    aria-label={t('dismiss')}
+                    onClick={() => toast.dismiss(tb.id)}
                   >
                     <FiX size={12} />
                   </Button>

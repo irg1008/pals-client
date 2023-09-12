@@ -1,0 +1,117 @@
+{
+  "brand": "Pals",
+  "Layout": {
+    "title": "Pals"
+  },
+  "Home": {
+    "logInLink": "Iniciar sesión",
+    "logOut": "Cerrar sesión",
+    "header": {
+      "meet": "Conoce.",
+      "explore": "Explora.",
+      "learn": "Aprende."
+    }
+  },
+  "ResetPassword": {
+    "cta": "Cambia tu contraseña",
+    "title": "Cambiar contraseña",
+    "submit": "Cambiar contraseña",
+    "submitting": "Cambiando contraseña...",
+    "request": {
+      "sent": "Enlace para restablecer la contraseña enviado",
+      "checkInbox": "Por favor, revisa tu correo y sigue las instrucciones para restablecer tu contraseña"
+    },
+    "email": {
+      "cta": "Escribe tu correo",
+      "submit": "Enviar enlace",
+      "submitting": "Enviando enlace...",
+      "notFound": "Correo no encontrado"
+    },
+    "newPassword": {
+      "label": "Nueva contraseña",
+      "placeholder": "Escribe tu nueva contraseña"
+    },
+    "confirmPassword": {
+      "label": "Confirmar contraseña",
+      "placeholder": "Confirma tu nueva contraseña"
+    },
+    "errors": {
+      "invalidRequest": "La solicitud no es válida o ha caducado"
+    },
+    "success": "Tu contraseña se ha restablecido correctamente"
+  },
+  "ConfirmEmail": {
+    "request": {
+      "sent": "Email de confirmación enviado",
+      "checkInbox": "Por favor, revisa tu correo y sigue las instrucciones para confirmar tu dirección de correo"
+    },
+    "confirm": {
+      "success": "Por favor, inicia sesión para continuar",
+      "invalid": {
+        "title": "Solicitud no válida",
+        "description": "La solicitud no es válida o ha caducado",
+        "logInLink": "Iniciar sesión"
+      }
+    }
+  },
+  "LogIn": {
+    "title": "Iniciar sesión",
+    "email": "Email",
+    "password": "Contraseña",
+    "submit": "Iniciar sesión",
+    "submitting": "Iniciando sesión...",
+    "forgotPassword": "¿Olvidaste tu contraseña?",
+    "noAccount": "¿No tienes una cuenta?",
+    "signUpLink": "Registrarse",
+    "googleLabel": "Iniciar sesión con Google",
+    "verification": {
+      "sending": "Enviando correo de verificación...",
+      "sent": "Correo de verificación enviado. ¡Revisa tu bandeja de entrada!",
+      "error": "Se produjo un error al enviar el correo de verificación"
+    },
+    "errors": {
+      "invalidCredentials": "Email o contraseña no válidos",
+      "notVerified": "No estás verificado. Enviando nuevo correo de confirmación...",
+      "default": "Se produjo un error al iniciar sesión"
+    }
+  },
+  "SignUp": {
+    "title": "Registrarse",
+    "email": "Email",
+    "password": "Contraseña",
+    "submit": "Registrarse",
+    "submitting": "Registrando...",
+    "alreadyAccount": "¿Ya tienes una cuenta?",
+    "logInLink": "Iniciar sesión",
+    "googleLabel": "Registrarse con Google",
+    "errors": {
+      "emailInUse": "Este correo ya está en uso",
+      "default": "Se produjo un error al crear tu cuenta"
+    }
+  },
+  "NotFound": {
+    "title": "No encontrado",
+    "description": "No se pudo encontrar el recurso solicitado",
+    "homeLink": "Volver a la página principal"
+  },
+  "Forbidden": {
+    "title": "Prohibido",
+    "description": "Debes iniciar sesión para acceder a esta página",
+    "logInLink": "Iniciar sesión"
+  },
+  "UI": {
+    "input": {
+      "email": {
+        "label": "Email",
+        "placeholder": "Escribe tu correo"
+      },
+      "password": {
+        "label": "Contraseña",
+        "placeholder": "Escribe tu contraseña"
+      }
+    },
+    "toast": {
+      "dismiss": "Cerrar mensaje"
+    }
+  }
+}

@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+iframe {
+  color-scheme: auto;
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
